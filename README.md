@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SmartIntern – AI-Powered Internship Recommendation Platform
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+SmartIntern is a web-based internship recommendation platform designed to help students discover relevant internship and job opportunities based on their profiles, resumes, and skills.
+
+The platform helps students manage their profiles, upload resumes, explore recommended opportunities, and track their job applications.
+
+## Features
+
+- **Student Registration and Login:** Secure user authentication.
+- **Student Profile Management:** Manage personal and academic details.
+- **Resume Upload:** Upload PDF resumes and extract resume text.
+- **Skill Extraction:** Identify skills from uploaded resumes.
+- **Job Recommendations:** Display relevant internship and job opportunities.
+- **Application Tracking:** Track submitted applications.
+- **Messaging:** Support communication through an inbox.
+- **Insights Dashboard:** View application and opportunity statistics.
+- **Resume PDF Generation:** Generate a formatted PDF from resume information.
+
+## Technology Stack
+
+| Component | Technology |
+|---|---|
+| Frontend | Next.js, React, TypeScript |
+| Styling | Tailwind CSS |
+| Backend | Next.js API Routes |
+| Relational Database | PostgreSQL |
+| NoSQL Database | MongoDB |
+| Authentication | JWT |
+| Resume Processing | PDF parsing |
+| Package Manager | npm |
+
+## Project Structure
+
+```text
+SmartIntern/
+├── app/
+│   ├── api/
+│   │   ├── admin/
+│   │   ├── applications/
+│   │   ├── auth/
+│   │   ├── inbox/
+│   │   ├── profile/
+│   │   ├── recommendations/
+│   │   └── resume/
+│   └── page.tsx
+├── database/
+│   └── feature-upgrade.sql
+├── lib/
+│   ├── db.ts
+│   ├── mongodb.ts
+│   └── session.ts
+├── public/
+├── components/
+├── types/
+├── package.json
+└── README.md
+```
+
+## Installation and Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/pallenenisloka07-lang/SmartIntern.git
+```
+
+### 2. Navigate to the project directory
+
+```bash
+cd SmartIntern
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Configure environment variables
+
+Create a `.env.local` file and configure the required database connections and authentication secret.
+
+Do not upload this file to GitHub because it contains sensitive credentials.
+
+### 5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Team Members
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Name | SRN |
+|---|---|
+| Palleneni Sloka | PES1UG24AM183 |
+| Pabbisetty Harshitha Sai | PES1UG24AM182 |
 
-## Learn More
+## GitHub Repository
 
-To learn more about Next.js, take a look at the following resources:
+[SmartIntern – GitHub Repository](https://github.com/pallenenisloka07-lang/SmartIntern)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Purpose
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+SmartIntern aims to simplify the internship search process by connecting student skills and profiles with relevant opportunities through a centralized web platform.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Developed as part of the DBMS Project – PES University.**
