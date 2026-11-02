@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import { pool } from "@/lib/db";
-
+import clientPromise from "@/lib/mongodb";
 
 export async function GET() {
   try {
@@ -31,6 +31,7 @@ export async function GET() {
       );
     }
 
+    // Fetch active jobs and their required and matching skills.
     const result = await pool.query(
       `SELECT
          j.job_id,
@@ -83,6 +84,7 @@ export async function GET() {
       [userId]
     );
 
+    // Calculate matching and missing skills.
     const recommendations = result.rows.map((job) => {
       const required = job.required_skills || [];
       const matching = job.matching_skills || [];
@@ -131,14 +133,15 @@ export async function GET() {
         (b.matchPercentage ?? -1) - (a.matchPercentage ?? -1)
     );
 
-    // Persist the latest recommendation result for each user/job in PostgreSQL.
-    // PostgreSQL remains the reliable history store even if MongoDB is unavailable.
+    // Save recommendation history in PostgreSQL.
     let postgresHistorySaved = false;
+
     try {
       for (const item of recommendations) {
         await pool.query(
           `INSERT INTO recommendation_runs
-             (user_id, job_id, match_percentage, matching_skills, missing_skills, explanation, generated_at)
+             (user_id, job_id, match_percentage, matching_skills,
+              missing_skills, explanation, generated_at)
            VALUES ($1, $2, $3, $4, $5, $6, CURRENT_TIMESTAMP)
            ON CONFLICT (user_id, job_id)
            DO UPDATE SET
@@ -157,21 +160,60 @@ export async function GET() {
           ]
         );
       }
+
       postgresHistorySaved = true;
     } catch (historyError) {
-      console.error("PostgreSQL recommendation history error:", historyError);
+      console.error(
+        "PostgreSQL recommendation history error:",
+        historyError
+      );
     }
 
-    // MongoDB history disabled. PostgreSQL is the history database.
-    const historySaved = false;
+    // Save a recommendation activity log in MongoDB.
+    let mongoHistorySaved = false;
+
+    try {
+      const client = await clientPromise;
+      const databaseName = process.env.MONGODB_DB;
+
+      if (!databaseName) {
+        throw new Error("MONGODB_DB is missing.");
+      }
+
+      const db = client.db(databaseName);
+
+      await db.collection("recommendation_activity_logs").insertOne({
+        userId,
+        recommendationCount: recommendations.length,
+        recommendations: recommendations.map((item) => ({
+          jobId: item.jobId,
+          title: item.title,
+          company: item.company,
+          matchPercentage: item.matchPercentage,
+          matchingSkills: item.matchingSkills,
+          missingSkills: item.missingSkills
+        })),
+        createdAt: new Date()
+      });
+
+      mongoHistorySaved = true;
+    } catch (mongoError) {
+      console.error(
+        "MongoDB recommendation log error:",
+        mongoError
+      );
+    }
 
     return NextResponse.json({
       recommendations,
       count: recommendations.length,
-      historySaved,
       postgresHistorySaved,
+      mongoHistorySaved,
       message: recommendations.length
-        ? "Recommendations calculated. PostgreSQL history: " + (postgresHistorySaved ? "saved." : "not saved.")
+        ? "Recommendations calculated. PostgreSQL history: " +
+          (postgresHistorySaved ? "saved. " : "not saved. ") +
+          "MongoDB activity log: " +
+          (mongoHistorySaved ? "saved." : "not saved.")
         : "No active opportunities are currently available."
     });
 
@@ -184,4 +226,3 @@ export async function GET() {
     );
   }
 }
-
