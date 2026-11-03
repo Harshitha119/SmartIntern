@@ -78,3 +78,7 @@ SELECT
     MAX(match_percentage) AS highest_match_percentage
 FROM recommendation_runs
 GROUP BY user_id;
+
+
+
+
