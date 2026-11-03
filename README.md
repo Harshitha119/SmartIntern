@@ -1,14 +1,21 @@
-# SmartIntern – AI-Powered Internship Recommendation Platform
+# SmartIntern – AI-Powered Internship Recommendation and Management System
 
 ## Project Overview
 
-SmartIntern is a web-based internship recommendation platform designed to help students discover relevant internship and job opportunities based on their profiles, resumes, and skills.
+SmartIntern is an AI-powered internship recommendation and management platform designed to help students discover suitable internship and job opportunities based on their profiles, resumes, and skills.
 
-The platform helps students manage their profiles, upload resumes, explore recommended opportunities, and track their job applications.
+The platform provides features such as student and recruiter registration, login, profile management, resume uploading, skill extraction, internship recommendations, application tracking, and messaging.
+
+## Project Novelty
+
+The main idea behind SmartIntern is to combine skill-based internship recommendations with internship application management in a single platform.
+
+Students can identify relevant opportunities based on their skills and qualifications, view matching and missing skills, and manage their applications. The system also combines relational and NoSQL databases to handle different types of application data.
 
 ## Features
 
-- **Student Registration and Login:** Secure user authentication.
+- **Student Registration and Login:** User registration and authentication.
+- **Recruiter Registration and Login:** Recruiter account access.
 - **Student Profile Management:** Manage personal and academic details.
 - **Resume Upload:** Upload PDF resumes and extract resume text.
 - **Skill Extraction:** Identify skills from uploaded resumes.
@@ -26,52 +33,67 @@ The platform helps students manage their profiles, upload resumes, explore recom
 | Frontend | Next.js, React, TypeScript |
 | Styling | Tailwind CSS |
 | Backend | Next.js API Routes |
-| Relational Database | PostgreSQL |
-| NoSQL Database | MongoDB |
+| Relational Database | PostgreSQL 18 |
+| NoSQL Database | MongoDB Atlas |
 | Authentication | JWT |
 | Resume Processing | PDF parsing |
+| Database Management | pgAdmin |
 | Package Manager | npm |
 
-## Database Design and Documentation
+## Database Design and Implementation
 
 SmartIntern uses PostgreSQL for structured application data and MongoDB for recommendation activity logging.
 
-### PostgreSQL Tables
+### PostgreSQL Database
 
-The database includes the following tables:
+Database name: `smartintern_db`
 
-- `users`
-- `student_profiles`
-- `resumes`
-- `skills`
-- `student_skills`
-- `companies`
-- `jobs`
-- `job_skills`
-- `applications`
-- `recommendation_runs`
-- `inbox_messages`
+The relational database contains 11 tables:
 
-### Database Concepts Implemented
+1. `users`
+2. `student_profiles`
+3. `resumes`
+4. `skills`
+5. `student_skills`
+6. `companies`
+7. `jobs`
+8. `job_skills`
+9. `applications`
+10. `recommendation_runs`
+11. `inbox_messages`
+
+The `student_skills` and `job_skills` tables are associative relations used to represent many-to-many relationships.
+
+### MongoDB Database
+
+- Database: `smartintern`
+- Collection: `recommendation_activity_logs`
+
+MongoDB is used to store recommendation activity logs using a flexible document-based structure.
+
+### Database Concepts
+
+The project demonstrates:
 
 - Primary keys and foreign key constraints
-- Relational table design
+- Relational database design
 - SQL JOIN operations
 - GROUP BY and HAVING clauses
 - Aggregate functions
-- Subqueries and Common Table Expressions (CTEs)
+- Subqueries
+- Common Table Expressions (CTEs)
 - Database views
 - Indexes
-- MongoDB CRUD operations
+- MongoDB document operations
 - MongoDB aggregation pipelines
 
-### Database Documentation Files
+## Database Documentation Files
 
 | File | Description |
 |---|---|
 | `docs/ER_DIAGRAM.jpeg` | Entity Relationship Diagram |
 | `docs/RELATIONAL_SCHEMA.md` | Relational schema and table structure |
-| `docs/DATABASE_DOCUMENTATION.md` | Database design and implementation documentation |
+| `docs/DATABASE_DOCUMENTATION.md` | Database design documentation |
 | `database/advanced_queries.sql` | Advanced SQL queries |
 | `database/indexes.sql` | Database index definitions |
 | `database/views.sql` | SQL view definitions |
@@ -147,7 +169,7 @@ Do not upload this file to GitHub because it contains sensitive credentials.
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open http://localhost:3000 in your browser.
 
 ## Team Members
 
@@ -166,4 +188,4 @@ SmartIntern aims to simplify the internship search process by connecting student
 
 ---
 
-**Developed as part of the DBMS Project – PES University.**
+**Developed as part of the Database Management Systems (DBMS) Project – PES University.**
