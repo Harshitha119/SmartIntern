@@ -46,7 +46,7 @@ SmartIntern uses PostgreSQL for structured application data and MongoDB for reco
 
 ### PostgreSQL Database
 
-Database name: `smartintern_db`
+**Database name:** `smartintern_db`
 
 The relational database contains 11 tables:
 
@@ -66,8 +66,8 @@ The `student_skills` and `job_skills` tables are associative relations used to r
 
 ### MongoDB Database
 
-- Database: `smartintern`
-- Collection: `recommendation_activity_logs`
+- **Database:** `smartintern`
+- **Collection:** `recommendation_activity_logs`
 
 MongoDB is used to store recommendation activity logs using a flexible document-based structure.
 
@@ -91,10 +91,12 @@ The project demonstrates:
 
 | File | Description |
 |---|---|
-| `docs/ER_DIAGRAM.jpeg` | Entity Relationship Diagram |
+| `docs/ER_DIAGRAM.png` | Entity Relationship Diagram |
 | `docs/RELATIONAL_SCHEMA.md` | Relational schema and table structure |
 | `docs/DATABASE_DOCUMENTATION.md` | Database design documentation |
+| `database/smartintern_complete.sql` | Complete PostgreSQL database schema |
 | `database/advanced_queries.sql` | Advanced SQL queries |
+| `database/feature-upgrade.sql` | Database feature upgrade script |
 | `database/indexes.sql` | Database index definitions |
 | `database/views.sql` | SQL view definitions |
 | `database/mongodb_aggregation.js` | MongoDB aggregation examples |
@@ -107,34 +109,78 @@ SmartIntern/
 ├── app/
 │   ├── api/
 │   │   ├── admin/
+│   │   │   └── jobs/
+│   │   │       └── route.ts
 │   │   ├── applications/
+│   │   │   └── route.ts
 │   │   ├── auth/
+│   │   │   ├── login/
+│   │   │   │   └── route.ts
+│   │   │   ├── logout/
+│   │   │   │   └── route.ts
+│   │   │   └── register/
+│   │   │       └── route.ts
 │   │   ├── inbox/
+│   │   │   ├── [id]/
+│   │   │   │   └── read/
+│   │   │   ├── contacts/
+│   │   │   └── route.ts
 │   │   ├── profile/
+│   │   │   └── route.ts
+│   │   ├── recommendation-history/
+│   │   │   └── route.ts
 │   │   ├── recommendations/
+│   │   │   └── route.ts
 │   │   └── resume/
+│   │       ├── tailor/
+│   │       └── upload/
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.tsx
 │   └── page.tsx
+│
 ├── database/
 │   ├── advanced_queries.sql
 │   ├── feature-upgrade.sql
 │   ├── indexes.sql
 │   ├── mongodb_aggregation.js
+│   ├── smartintern_complete.sql
 │   └── views.sql
+│
 ├── docs/
 │   ├── DATABASE_DOCUMENTATION.md
-│   ├── ER_DIAGRAM.jpeg
+│   ├── ER_DIAGRAM.png
 │   └── RELATIONAL_SCHEMA.md
+│
 ├── lib/
 │   ├── db.ts
 │   ├── mongodb.ts
 │   └── session.ts
+│
 ├── public/
-├── components/
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+│
 ├── tests/
 │   └── database_tests.md
+│
 ├── types/
+│   └── pdf-parse.d.ts
+│
+├── .gitignore
+├── README.md
+├── README-FEATURE-PATCH.md
+├── eslint.config.mjs
+├── next.config.ts
 ├── package.json
-└── README.md
+├── package-lock.json
+├── reprocess-resume.cjs
+├── seed-jobs.cjs
+├── seed-skills.cjs
+└── tsconfig.json
 ```
 
 ## Installation and Setup
